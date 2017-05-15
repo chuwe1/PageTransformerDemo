@@ -69,7 +69,7 @@ public interface PageTransformer {
     void transformPage(View page, float position);
 }
 ```
-虽然解释haisua挺清楚的，不过好像并没有什么卵用啊。根本没说滑动的时候page是如何变化的，position又是如何变化的。对我自己要实现一个切换效果根本没什么帮助啊。那么怎么办？好吧，没办法我们打一下log，看一下是如何变化的：
+虽然解释还算挺清楚的，不过好像并没有什么卵用啊。根本没说滑动的时候page是如何变化的，position又是如何变化的。对我自己要实现一个切换效果根本没什么帮助啊。那么怎么办？好吧，没办法我们打一下log，看一下是如何变化的：
 
 1. 布局文件
 ```
@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
 ![](https://github.com/chuwe1/PageTransformerDemo/blob/master/screenshots/log3.png)
 我一共滑了三次，截取了三个log，你能看出什么规律来吗？讲道理其实为看不出来什么规律的。
 
-诶！有人说了每次最后都有5个整数，**没错！**这还真是一条规律。
+诶！有人说了每次最后都有5个整数，**没错!**这还真是一条规律。
 为了让我们的方便找出规律，我对5个page做了一些处理
 ```
 left2.setTag("left2");
@@ -201,7 +201,7 @@ Log.e((String) page.getTag(), position + "");
 这是就只会看到左2页面的position变化了，可以看出来是一个有-4 -> -3的变化过程，同样我们也能得到其他每个页面的变化归率来。
 
 下面是我列举的一张log表格，给大家展示一下每次滑动，每个page所对应的postion变化，
-这里我们以**“中”**page为当前页面进行左右滑动。
+这里我们以**中**page为当前页面进行左右滑动。
 
 
 |                        |      左2     |    左1   |    中（当前页面）   | 右1 |   右2    |
