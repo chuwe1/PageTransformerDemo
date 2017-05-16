@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
 ![](https://github.com/chuwe1/PageTransformerDemo/blob/master/screenshots/log1.png)
 ![](https://github.com/chuwe1/PageTransformerDemo/blob/master/screenshots/log2.png)
 ![](https://github.com/chuwe1/PageTransformerDemo/blob/master/screenshots/log3.png)
-我一共滑了三次，截取了三个log，你能看出什么规律来吗？讲道理其实为看不出来什么规律的。
+我一共滑了三次，截取了三个log，你能看出什么规律来吗？讲道理，这能看出来？
 
 诶！有人说了每次最后都有5个整数，**没错!**这还真是一条规律。
 为了让我们的方便找出规律，我对5个page做了一些处理
@@ -198,7 +198,7 @@ Log.e((String) page.getTag(), position + "");
 ![](https://github.com/chuwe1/PageTransformerDemo/blob/master/screenshots/log4.png)
 好像还是看不出来什么，不过从现在打出的log中能发现，其实滑动的时候是每个page都在动，transformPage方法回调的page并非只是当前滑动的page而是所有滑动的page，postion也并非是当前滑动page的postion变化，而是每个page的position变化。这个时候怎么办？这里有个小技巧
 ![](https://github.com/chuwe1/PageTransformerDemo/blob/master/screenshots/log5.png)
-这是就只会看到左2页面的position变化了，可以看出来是一个有-4 -> -3的变化过程，同样我们也能得到其他每个页面的变化归率来。
+这是就只会看到左2页面的position变化了，可以看出来是一个有-4 -> -3的变化过程，同样我们也能得到其他每个页面的变化规律来。
 
 下面是我列举的一张log表格，给大家展示一下每次滑动，每个page所对应的postion变化，
 这里我们以**中**page为当前页面进行左右滑动。
@@ -246,7 +246,7 @@ minAlpha ----------------> 1       1 ---------------> minAlpha
 ——这TM不就是初中数学等比运算嘛。这个x不就是我们要求的变化过程中的透明度值嘛。
 好的！开始解题：
 ```
-解：设所求变量“透明度为x”。
+解：设所求变量“透明度”为x。
 由题可得：
   -1 - position      position - 0        0 - position       position - 1
  --------------- = ----------------  , ---------------- =  ----------------
