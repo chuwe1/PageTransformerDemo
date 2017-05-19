@@ -333,3 +333,6 @@ if (position < -1 || position > 1) {
 现在的效果，就和开始的是一模一样了。
 
 相信大家看完以后对于position是如果变化的都能了解了，也都知道如何自己去实现出各种效果了。
+
+最后奉上一个翻转切换的效果图
+[](https://github.com/chuwe1/PageTransformerDemo/blob/master/screenshots/4.gif)
