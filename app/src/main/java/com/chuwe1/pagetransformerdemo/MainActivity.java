@@ -97,6 +97,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        // 翻转效果
+        // viewPager.setPageTransformer(false, new FlipPageTransformer());
     }
 
 
