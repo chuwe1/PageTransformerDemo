@@ -6,7 +6,7 @@ How to custom ViewPager's PageTransformer
 **当然是朝这里看过来了**
 
 废话不多说，我们先看一个效果图
-![](http://upload-images.jianshu.io/upload_images/2144156-03a770dbbbc4f53d.gif?imageMogr2/auto-orient/strip)
+![](https://github.com/chuwe1/PageTransformerDemo/blob/master/screenshots/1.gif)
 这种切换效果相信大家都在很多地方见过，没错这就是[Google的官方示例_DepthPageTransformer](https://developer.android.google.cn/training/animation/screen-slide.html)，其实现代码如下：
 ```
 public class DepthPageTransformer implements ViewPager.PageTransformer {
@@ -69,7 +69,7 @@ public interface PageTransformer {
     void transformPage(View page, float position);
 }
 ```
-虽然解释haisua挺清楚的，不过好像并没有什么卵用啊。根本没说滑动的时候page是如何变化的，position又是如何变化的。对我自己要实现一个切换效果根本没什么帮助啊。那么怎么办？好吧，没办法我们打一下log，看一下是如何变化的：
+虽然解释还算挺清楚的，不过好像并没有什么卵用啊。根本没说滑动的时候page是如何变化的，position又是如何变化的。对我自己要实现一个切换效果根本没什么帮助啊。那么怎么办？好吧，没办法我们打一下log，看一下是如何变化的：
 
 1. 布局文件
 ```
@@ -173,15 +173,15 @@ public class MainActivity extends AppCompatActivity {
 }
 ```
 接下来我们运行，效果如下：
-![](http://upload-images.jianshu.io/upload_images/2144156-52a5b9531623a188.gif?imageMogr2/auto-orient/strip)
+![](https://github.com/chuwe1/PageTransformerDemo/blob/master/screenshots/2.gif)
 这是很正常的一个ViewPager切换，我们看一下log
 
-![](http://upload-images.jianshu.io/upload_images/2144156-1bb9e1dac889ae7f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-![](http://upload-images.jianshu.io/upload_images/2144156-fd47ee03edfe2539.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-![](http://upload-images.jianshu.io/upload_images/2144156-085b66c2731a67e2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-我一共滑了三次，截取了三个log，你能看出什么规律来吗？讲道理其实为看不出来什么规律的。
+![](https://github.com/chuwe1/PageTransformerDemo/blob/master/screenshots/log1.png)
+![](https://github.com/chuwe1/PageTransformerDemo/blob/master/screenshots/log2.png)
+![](https://github.com/chuwe1/PageTransformerDemo/blob/master/screenshots/log3.png)
+我一共滑了三次，截取了三个log，你能看出什么规律来吗？讲道理，这能看出来？
 
-诶！有人说了每次最后都有5个整数，**没错！**这还真是一条规律。
+诶！有人说了每次最后都有5个整数，**没错!**这还真是一条规律。
 为了让我们的方便找出规律，我对5个page做了一些处理
 ```
 left2.setTag("left2");
@@ -195,13 +195,13 @@ right2.setTag("right3");
 Log.e((String) page.getTag(), position + "");
 ```
 在来看一下
-![](http://upload-images.jianshu.io/upload_images/2144156-01aae50f64df3988.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](https://github.com/chuwe1/PageTransformerDemo/blob/master/screenshots/log4.png)
 好像还是看不出来什么，不过从现在打出的log中能发现，其实滑动的时候是每个page都在动，transformPage方法回调的page并非只是当前滑动的page而是所有滑动的page，postion也并非是当前滑动page的postion变化，而是每个page的position变化。这个时候怎么办？这里有个小技巧
-![](http://upload-images.jianshu.io/upload_images/2144156-96c9b9ae7580c646.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-这是就只会看到左2页面的position变化了，可以看出来是一个有-4 -> -3的变化过程，同样我们也能得到其他每个页面的变化归率来。
+![](https://github.com/chuwe1/PageTransformerDemo/blob/master/screenshots/log5.png)
+这是就只会看到左2页面的position变化了，可以看出来是一个有-4 -> -3的变化过程，同样我们也能得到其他每个页面的变化规律来。
 
 下面是我列举的一张log表格，给大家展示一下每次滑动，每个page所对应的postion变化，
-这里我们以**“中”**page为当前页面进行左右滑动。
+这里我们以**中**page为当前页面进行左右滑动。
 
 
 |                        |      左2     |    左1   |    中（当前页面）   | 右1 |   右2    |
@@ -246,7 +246,7 @@ minAlpha ----------------> 1       1 ---------------> minAlpha
 ——这TM不就是初中数学等比运算嘛。这个x不就是我们要求的变化过程中的透明度值嘛。
 好的！开始解题：
 ```
-解：设所求变量“透明度为x”。
+解：设所求变量“透明度”为x。
 由题可得：
   -1 - position      position - 0        0 - position       position - 1
  --------------- = ----------------  , ---------------- =  ----------------
@@ -284,7 +284,7 @@ viewPager.setPageTransformer(true, new ViewPager.PageTransformer() {
 和上面一同，可以算出来最终的x = 1 - position + minScale * position，同样也不要纠结为何不一样，你可以尝试把DepthPageTransformer在这个(0，1)这个区间的缩放公式化简出来再看看。
 
 再来看看现在的效果图
-![](http://upload-images.jianshu.io/upload_images/2144156-7dc50c4df6d19326.gif?imageMogr2/auto-orient/strip)
+![](https://github.com/chuwe1/PageTransformerDemo/blob/master/screenshots/3.gif)
 是不是既有透明度的变化，也有缩放的变化了？
 
 #### 最后就是平移的变化了（这个是需要解释一番的）
